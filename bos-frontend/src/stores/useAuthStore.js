@@ -1,6 +1,5 @@
-import { UserService } from '@/service/UserService';
 import { defineStore } from 'pinia';
-
+import { login } from '@/api/authApi';
 import router from '@/router';
 
 export const useAuthStore = defineStore({
@@ -28,59 +27,28 @@ export const useAuthStore = defineStore({
             this.message = null;
             this.loading = true;
             this.haveAccount = false;
-            const tempData = UserService.getUser();
-            // try {
-            //     await login(form).then((response) => {
-            //         if (response.code != 401) {
-            //             this.user = response.data.user;
-            //             this.token = response.data.accessToken;
-            //             this.haveAccount = true;
-            //             this.message = null;
-            //             let api = new Resource('admin/users');
-            //             api.list()
-            //                 .then((data) => {
-            //                     this.role = ['Admin'];
-            //                 })
-            //                 .catch((error) => {
-            //                     console.log(error);
-            //                 })
-            //                 .finally(() => {
-            //                     this.loading = false;
-            //                 });
-            //         }
-            //     });
-            // } catch (e) {
-            //     this.haveAccount = false;
-            //     console.log(e);
-            // }
-            if (tempData.filter((user) => user.email == form.email).length > 0) {
-                if (tempData.filter((user) => user.password == form.password).length > 0) {
-                    let data = tempData.filter((user) => user.email == form.email);
-                    console.log(data);
-                    this.user = data;
-                    this.token = data[0].token;
-                    this.haveAccount = true;
-                    this.message = null;
-                    this.role = data[0].role;
-                    this.newUser = tempData.filter((item) => item.role.length == 1 && item.role.includes('User'));
-                } else this.message = 'Incorrect password !';
-            }
-            if (this.haveAccount) {
-                if (this.role.length == 1 && this.role.includes('User')) {
-                    setTimeout(() => {
-                        this.loading = false;
-                        router.push('/new-user');
-                    }, 1000);
-                } else {
-                    setTimeout(() => {
-                        this.loading = false;
-                        router.push('/');
-                    }, 1000);
-                }
-            }
-            if (!this.haveAccount && !this.message) {
+            try {
+                await login(form).then((response) => {
+                    if (response.code != 401) {
+                        console.log(response);
+
+                        if (this.role.includes('User')) {
+                            setTimeout(() => {
+                                this.loading = false;
+                                router.push('/new-user');
+                            }, 1000);
+                        } else {
+                            setTimeout(() => {
+                                this.loading = false;
+                                router.push('/');
+                            }, 1000);
+                        }
+                    }
+                });
+            } catch (e) {
                 this.loading = false;
                 this.message = 'Incorrect email and password !';
+                console.log(e);
             }
         },
         setMenu(role) {

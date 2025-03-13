@@ -9,8 +9,8 @@ export function csrf() {
 
 export function login(data) {
     return request({
-        // url: 'api/login',
-        url: 'auth',
+        url: 'api/login',
+        // url: 'auth',
         method: 'post',
         data: data
     });
