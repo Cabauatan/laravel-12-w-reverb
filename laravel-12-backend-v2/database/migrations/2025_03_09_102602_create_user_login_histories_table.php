@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('user_login_histories', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('previous_date')->nullable();
-            $table->dateTime('current_date')->nullable();
+            $table->dateTime('last_login_date')->nullable();
+            $table->dateTime('login_date')->nullable();
             $table->boolean('is_active')->default(false);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

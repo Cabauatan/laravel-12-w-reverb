@@ -4,6 +4,7 @@ import { useLayout } from '@/layout/composables/layout';
 import { useAuthStore } from '@/stores/useAuthStore.js';
 import { useVuelidate } from '@vuelidate/core';
 import { email, required } from '@vuelidate/validators';
+import router from '@/router';
 
 const { checkDarkMode } = useLayout();
 
@@ -46,8 +47,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <FloatingConfigurator />
     <div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden select-none font-roboto" :draggable="false">
+        <FloatingConfigurator />
         <div class="flex flex-col items-center justify-center">
             <Card style="width: 30rem; overflow: hidden" class="p-5">
                 <template #header>
@@ -101,6 +102,9 @@ onMounted(() => {
                 <template #footer>
                     <div class="flex justify-center items-center">
                         <p class="font-serif cursor-pointer hover:underline select-none text-forgot-pass">Forgot Password?</p>
+                    </div>
+                    <div class="flex justify-center items-center">
+                        <p class="font-serif cursor-pointer hover:underline select-none text-forgot-pass" @click="router.push('/auth/register')">Create New Account</p>
                     </div>
                 </template>
             </Card>

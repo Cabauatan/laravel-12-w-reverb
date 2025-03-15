@@ -30,7 +30,12 @@ class LoginController extends BaseController
 
         $res = $this->repo->login($input);
 
-        return $this->sendResponse($res, 'login successfully.');
+        if( $res)
+        {
+            return $this->sendResponse($res, 'login successfully.');
+        }
+        return $this->sendError('login successfully.', 'Wrong email and password',401);
+
 
     }
 }

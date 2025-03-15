@@ -4,6 +4,7 @@ import router from '@/router';
 import { useAuthStore } from '@/stores/useAuthStore.js';
 import { useVuelidate } from '@vuelidate/core';
 import { email, required, requiredIf } from '@vuelidate/validators';
+import FloatingConfigurator from '@/components/FloatingConfigurator.vue';
 const { checkDarkMode } = useLayout();
 
 checkDarkMode();
@@ -86,6 +87,8 @@ onMounted(() => {
 
 <template>
     <div class="md:p-0 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-screen overflow-hidden select-none font-roboto" :draggable="false">
+        <FloatingConfigurator />
+
         <div class="card w-[1280px] shadow-xl">
             <Form @submit="createAccount">
                 <div class="grid grid-cols-12 gap-4">

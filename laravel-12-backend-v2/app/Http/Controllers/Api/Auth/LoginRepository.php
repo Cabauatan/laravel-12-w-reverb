@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class LoginRepository
 {
@@ -16,14 +12,8 @@ class LoginRepository
 
         if (Auth::attempt(['email' => $input['email'], 'password' => $input['password']])) {
             $user = Auth::user();
-
-            // $firstLogin = count(DB::select('EXEC checkFirstLogIn @id = ?',[$user->id])) <= 0;
-
-            // if($firstLogin)
-            // {
-
-            // }
-
+            DB::statement('EXEC checkFirstLogIn @id = ?',[(int)$user->id]);
+            Auth::logoutOtherDevices($input['password']);
             return [
                 'name' =>  $user->name,
                 'email' =>  $user->email,
@@ -33,12 +23,5 @@ class LoginRepository
                 // 'history' => DB::select('SET NOCOUNT ON; EXEC authLogin @id = ?',[$user->id])
             ];
         }
-
-        
-        // return DB::connection('sqlsrv2') ->select('SET NOCOUNT ON; EXEC selectUser'); /// ANOTHER DB CONNECTION
-
-        // return DB::select('SET NOCOUNT ON; EXEC selectUser');
-
-        // return User::get();
     }
 }

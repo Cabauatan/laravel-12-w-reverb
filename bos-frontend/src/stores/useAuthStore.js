@@ -5,16 +5,16 @@ import router from '@/router';
 export const useAuthStore = defineStore({
     id: 'auth-store',
     state: () => ({
-        user: [],
+        user_name: '',
         token: '',
-        role: ['Admin'],
+        role: [''],
         haveAccount: false,
         message: null,
         newUser: 0,
         loading: false
     }),
     getters: {
-        get_user: (state) => state.user,
+        get_user_name: (state) => state.user_name,
         get_token: (state) => state.token,
         get_role: (state) => state.role,
         get_haveAccount: (state) => state.haveAccount,
@@ -31,7 +31,9 @@ export const useAuthStore = defineStore({
                 await login(form).then((response) => {
                     if (response.code != 401) {
                         console.log(response);
-
+                        this.user_name = response.data.name;
+                        this.token = response.data.token;
+                        this.role = response.data.roles;
                         if (this.role.includes('User')) {
                             setTimeout(() => {
                                 this.loading = false;
@@ -56,9 +58,9 @@ export const useAuthStore = defineStore({
         },
         async logout() {
             // await logout().then((response) => {});
-            this.user = [];
+            this.user_name = [];
             this.token = '';
-            this.role = ['Admin'];
+            this.role = [];
             this.haveAccount = false;
             this.newUser = 0;
             this.message = null;
