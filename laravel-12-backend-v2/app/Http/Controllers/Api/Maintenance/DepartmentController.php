@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Api\Maintenance;
 
-use App\Http\Controllers\BaseController;
+use App\Events\SampleReverbEvent;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\BaseController;
 
 class DepartmentController extends BaseController
 {
@@ -12,7 +15,9 @@ class DepartmentController extends BaseController
      */
     public function index(Request $request)
     {
-        return $this->sendResponse('login successfully.', 'Wrong email and password');
+        $userquery = DB::table('getUserRole')->where('roles','=','User')->first();
+        broadcast(new SampleReverbEvent($userquery->user_id));
+        return $this->sendResponse($userquery->user_id, 'Wrong email and password');
 
     }
 

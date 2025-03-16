@@ -21,6 +21,7 @@ class LoginRepository
             DB::statement('EXEC checkFirstLogIn @id = ?',[(int)$user->id]);
             Auth::logoutOtherDevices($input['password']);
             return [
+                'id' =>  $user->id,
                 'name' =>  $user->name,
                 'email' =>  $user->email,
                 'token' => $user->createToken($user->account_number)->plainTextToken,

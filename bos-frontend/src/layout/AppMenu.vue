@@ -239,6 +239,18 @@ const model = ref([
                 role: ['Admin', 'SuperAdmin']
             }
         ]
+    },
+    {
+        label: 'Maintenance',
+        role: ['Admin', 'SuperAdmin'],
+        items: [
+            {
+                label: 'Department',
+                icon: 'fa-solid fa-chair-office',
+                to: '/maintenance/department',
+                role: ['Admin', 'SuperAdmin']
+            }
+        ]
     }
 ]);
 </script>

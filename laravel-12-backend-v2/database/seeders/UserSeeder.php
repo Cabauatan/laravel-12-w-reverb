@@ -30,6 +30,6 @@ class UserSeeder extends Seeder
             'email' => 'laurence.radasa@afab.gov.ph',
             'password' => 'password',
         ]);
-        $user->assignRole('SuperAdmin');
+        $user->assignRole('User');
     }
 }

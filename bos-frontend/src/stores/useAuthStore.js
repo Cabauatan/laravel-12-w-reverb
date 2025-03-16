@@ -1,11 +1,12 @@
-import { defineStore } from 'pinia';
 import { login, logout } from '@/api/authApi';
 import router from '@/router';
+import { defineStore } from 'pinia';
 
 export const useAuthStore = defineStore({
     id: 'auth-store',
     state: () => ({
         user_name: '',
+        id: '',
         token: '',
         role: [''],
         message: null,
@@ -14,6 +15,7 @@ export const useAuthStore = defineStore({
     }),
     getters: {
         get_user_name: (state) => state.user_name,
+        get_id: (state) => state.id,
         get_token: (state) => state.token,
         get_role: (state) => state.role,
         get_message: (state) => state.message,
@@ -28,6 +30,7 @@ export const useAuthStore = defineStore({
                 await login(form).then((response) => {
                     if (response.code != 401) {
                         console.log(response);
+                        this.id = response.data.id;
                         this.user_name = response.data.name;
                         this.token = response.data.token;
                         this.role = response.data.roles;
@@ -37,10 +40,8 @@ export const useAuthStore = defineStore({
                                 router.push('/new-user');
                             }, 1000);
                         } else {
-                            setTimeout(() => {
-                                this.loading = false;
-                                router.push('/');
-                            }, 1000);
+                            this.loading = false;
+                            router.push('/');
                         }
                     }
                 });

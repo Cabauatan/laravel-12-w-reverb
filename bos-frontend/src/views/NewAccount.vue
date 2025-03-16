@@ -7,12 +7,22 @@
             <div class="col-span-12 md:col-span-12 flex justify-center">
                 <Button label="Back" class="block" @click="router.push('/auth/login')"></Button>
             </div>
+            <div class="col-span-12 md:col-span-12 flex justify-center mt-2">
+                <Button label="TRY" class="block" @click="router.push('/auth/login')"></Button>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
 import router from '@/router';
+import { useAuthStore } from '@/stores/useAuthStore.js';
+
+const authStore = useAuthStore();
+
+window.Echo.channel(`sample.${authStore.get_id}`).listen('SampleReverbEvent', (e) => {
+    console.log('connected');
+});
 </script>
 
 <style scoped></style>

@@ -1,3 +1,4 @@
+import '@/bootstrap';
 import { Form } from '@primevue/forms';
 import { definePreset } from '@primevue/themes';
 import Aura from '@primevue/themes/aura';

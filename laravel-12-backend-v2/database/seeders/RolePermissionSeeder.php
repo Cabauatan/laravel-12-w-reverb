@@ -21,6 +21,8 @@ class RolePermissionSeeder extends Seeder
             Permission::create(['name' => $admin]);
         }
         $ticketSadminrole = Role::create(['name' => 'SuperAdmin']);
+        $ticketSuserrole = Role::create(['name' => 'User']);
         $ticketSadminrole->syncPermissions($adminp);
+        $ticketSuserrole->syncPermissions($adminp);
     }
 }

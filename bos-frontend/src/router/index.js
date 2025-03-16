@@ -29,6 +29,16 @@ const router = createRouter({
                     ]
                 },
                 {
+                    path: '/maintenance',
+                    children: [
+                        {
+                            path: 'department',
+                            name: 'department',
+                            component: () => import('@/views/pages/maintenance/Department.vue')
+                        }
+                    ]
+                },
+                {
                     path: '/forms',
                     children: [
                         {
