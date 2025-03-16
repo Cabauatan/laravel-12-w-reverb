@@ -38,4 +38,12 @@ class LoginController extends BaseController
 
 
     }
+
+    public function logout()
+    {
+        $res = $this->repo->logout();
+
+        return $this->sendResponse($res, 'logout successfully.');
+        
+    }
 }

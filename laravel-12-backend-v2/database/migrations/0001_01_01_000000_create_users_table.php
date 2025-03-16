@@ -14,6 +14,15 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('account_number');
+            $table->string('customer_contact')->nullable();
+            $table->string('customer_address')->nullable();
+            $table->string('company_name')->default('AUTHORITY OF THE FREEPORT AREA OF BATAAN');
+            $table->string('company_contact')->default('(047) 935-4004');
+            $table->string('company_address')->default('AFAB Administration Building, Freeport Area of Bataan, Mariveles, Bataan Philippines 2106');
+            $table->string('company_email')->default('info@afab.gov.ph');
+
+            $table->dateTime('account_created');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

@@ -36,8 +36,9 @@ service_bos.interceptors.response.use(
                 console.log('OK');
                 break;
             case 401:
+                const authStore = useAuthStore();
                 console.log('Unauthorized');
-                router.push('/auth/login');
+                authStore.logout();
                 break;
             case 403:
                 console.log('No Access');

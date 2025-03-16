@@ -1,11 +1,4 @@
-<script setup>
-import { useSampleStore } from '@/stores/useSampleStore.js';
-const sampleStore = useSampleStore();
-
-onMounted(() => {
-    // sampleStore.fetch();
-});
-</script>
+<script setup></script>
 
 <template>
     <router-view />

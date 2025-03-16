@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { login } from '@/api/authApi';
+import { login, logout } from '@/api/authApi';
 import router from '@/router';
 
 export const useAuthStore = defineStore({
@@ -8,7 +8,6 @@ export const useAuthStore = defineStore({
         user_name: '',
         token: '',
         role: [''],
-        haveAccount: false,
         message: null,
         newUser: 0,
         loading: false
@@ -17,7 +16,6 @@ export const useAuthStore = defineStore({
         get_user_name: (state) => state.user_name,
         get_token: (state) => state.token,
         get_role: (state) => state.role,
-        get_haveAccount: (state) => state.haveAccount,
         get_message: (state) => state.message,
         get_newUser: (state) => state.newUser,
         get_loading: (state) => state.loading
@@ -26,7 +24,6 @@ export const useAuthStore = defineStore({
         async submitLogin(form) {
             this.message = null;
             this.loading = true;
-            this.haveAccount = false;
             try {
                 await login(form).then((response) => {
                     if (response.code != 401) {
@@ -57,15 +54,16 @@ export const useAuthStore = defineStore({
             return this.role.map((element) => role.includes(element)).includes(true);
         },
         async logout() {
-            // await logout().then((response) => {});
-            this.user_name = [];
-            this.token = '';
-            this.role = [];
-            this.haveAccount = false;
-            this.newUser = 0;
-            this.message = null;
-            router.push('/auth/login');
-            this.loading = false;
+            await logout().then(() => {
+                this.user_name = [];
+                this.token = '';
+                this.role = [];
+                this.haveAccount = false;
+                this.newUser = 0;
+                this.message = null;
+                router.push('/auth/login');
+                this.loading = false;
+            });
         }
     },
     persist: true
